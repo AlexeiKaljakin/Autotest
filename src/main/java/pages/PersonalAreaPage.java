@@ -1,7 +1,7 @@
 package pages;
 
 import common.AbsCommon;
-import data.countrycityes.ICityData;
+import data.countrycities.ICityData;
 import data.fielddata.InputFieldData;
 import data.fielddata.genderdata.GenderData;
 import data.language.EnglishLevelData;

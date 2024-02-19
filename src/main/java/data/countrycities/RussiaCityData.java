@@ -1,4 +1,4 @@
-package data.countrycityes;
+package data.countrycities;
 
 public enum RussiaCityData implements ICityData {
     MOSCOW("Москва", CountryData.RUSSIA);

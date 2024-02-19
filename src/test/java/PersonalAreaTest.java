@@ -1,8 +1,8 @@
 import com.github.javafaker.Faker;
 import components.Header;
 import components.popups.AuthorizationPopup;
-import data.countrycityes.ICityData;
-import data.countrycityes.RussiaCityData;
+import data.countrycities.ICityData;
+import data.countrycities.RussiaCityData;
 import data.fielddata.InputFieldData;
 import data.fielddata.genderdata.GenderData;
 import data.language.EnglishLevelData;

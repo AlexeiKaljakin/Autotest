@@ -1,4 +1,4 @@
-package data.countrycityes;
+package data.countrycities;
 
 public interface ICityData {
     String getName();
