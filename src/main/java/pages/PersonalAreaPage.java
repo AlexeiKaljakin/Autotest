@@ -22,28 +22,23 @@ public class PersonalAreaPage extends AbsCommon {
     }
 
     public void clearFieldsData(InputFieldData... inputFieldData) {
-        InputFieldData[] var2 = inputFieldData;
-        int var3 = inputFieldData.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            InputFieldData fieldData = var2[var4];
-            this.driver.findElement(By.cssSelector(String.format("input[name='%s']", fieldData.getName()))).clear();
+        for (InputFieldData fieldData : inputFieldData) {
+            driver.findElement(By.cssSelector(String.format("input[name='%s']", fieldData.getName()))).clear();
         }
-
-        this.logger.info("Fields cleared");
     }
 
     public void clearFieldsCountryAndEnglish() {
         this.driver.findElement(By.xpath("//div[@data-num='0']/div/div/button[@type='button']")).click();
         this.driver.findElement(By.xpath("//div[@data-num='1']/div/div/button[@type='button']")).click();
         this.driver.findElement(By.cssSelector(".js-lk-cv-dependent-master.js-lk-cv-custom-select")).click();
-        this.driver.findElement(By.xpath("//button[@data-value='' and @data-empty='Не указано' and @title='Не выбрано']")).click();
+        this.driver.findElement(By.xpath("//button[@data-empty='Не указано']")).click();
         this.driver.findElement(By.xpath("//input[@name='english_level']/ancestor:: div[contains(@class, 'js-lk-cv-custom-select')]")).click();
-        this.driver.findElement(By.xpath("//div[@class='lk-cv-block__select-options js-custom-select-options-container']/div/button[@title='Не выбрано']")).click();
+        this.driver.findElement(By.xpath("//input[@data-title='Уровень знания английского языка']/parent::*/parent::*//following-sibling::button[contains(text(),'Не указано')]")).click();
     }
 
-    public void addDataFields(InputFieldData inputFieldData, String data) {
-        this.driver.findElement(By.cssSelector(String.format("input[name='%s']", inputFieldData.getName()))).sendKeys(new CharSequence[]{data});
+    public void addDataFields(String data, InputFieldData... inputFieldData) {
+        for (InputFieldData fieldData : inputFieldData)
+        this.driver.findElement(By.cssSelector(String.format("input[name='%s']", fieldData.getName()))).sendKeys(data);
     }
 
     public void addCountry(ICityData cityData) {
@@ -88,9 +83,6 @@ public class PersonalAreaPage extends AbsCommon {
 
     }
 
-    public void clickAddCommunicationMethod() {
-        this.driver.findElement(By.cssSelector("button.js-lk-cv-custom-select-add")).click();
-    }
 
     public void addContactsOne(InputFieldData inputFieldData, String data, int number) {
         this.driver.findElement(By.xpath("//button[@type='button' and text()='Добавить']")).click();
@@ -117,8 +109,11 @@ public class PersonalAreaPage extends AbsCommon {
         Assertions.assertEquals("Данные успешно сохранены", actualText);
     }
 
-    public void checkPersonalArea(InputFieldData inputFieldData) {
-        Assertions.assertTrue(!this.driver.findElement(By.cssSelector(String.format("input[name='%s']", inputFieldData.getName()))).getAttribute("value").isEmpty());
+    public void checkPersonalArea(InputFieldData... inputFieldData) {
+        for (InputFieldData fieldData : inputFieldData) {
+            Assertions.assertTrue(!driver.findElement(By.cssSelector(String.format("input[name='%s']",fieldData.getName()))).getAttribute("value").isEmpty())
+            ;
+        }
     }
 
     public void chechPersonalAreaData() {

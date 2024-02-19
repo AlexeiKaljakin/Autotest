@@ -24,12 +24,12 @@ public class AuthorizationPopup extends AbsCommon implements IPopup {
         this.driver.findElement(By.xpath("//div[./input[@name='email']]")).click();
         WebElement mailClick = this.driver.findElement(By.xpath("//input[@name='email']"));
         this.waitTools.waitForCondition(ExpectedConditions.visibilityOf(mailClick));
-        mailClick.sendKeys(new CharSequence[]{this.login});
+        mailClick.sendKeys(login);
     }
 
     public void enterPassword() {
         this.driver.findElement(By.xpath("//div[./input[@type='password']]")).click();
-        this.driver.findElement(By.xpath("//input[@type='password']")).sendKeys(new CharSequence[]{this.password});
+        this.driver.findElement(By.xpath("//input[@type='password']")).sendKeys(password);
     }
 
     public void enterLoginButton() {

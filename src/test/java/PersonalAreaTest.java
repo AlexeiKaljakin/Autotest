@@ -29,7 +29,7 @@ public class PersonalAreaTest {
 
     @BeforeEach
     public void init() {
-        this.driver = (new WebDriverFactory(new String[]{"--start-maximized"})).create();
+        this.driver = (new WebDriverFactory("--start-maximized")).create();
         this.logger.info("Start driver");
     }
 
@@ -38,14 +38,6 @@ public class PersonalAreaTest {
         if (this.driver != null) {
             this.driver.quit();
             this.logger.info("Quit driver");
-        }
-
-    }
-
-    public void closeDriver() {
-        if (this.driver != null) {
-            this.driver.close();
-            this.logger.info("Close driver");
         }
 
     }
@@ -63,31 +55,24 @@ public class PersonalAreaTest {
         header.checkLogoUser();
         header.clickPersonalArea();
         PersonalAreaPage personalAreaPage = new PersonalAreaPage(this.driver);
-        personalAreaPage.clearFieldsData(new InputFieldData[]{InputFieldData.FNAME});
-        personalAreaPage.clearFieldsData(new InputFieldData[]{InputFieldData.FNAMELATIN});
-        personalAreaPage.clearFieldsData(new InputFieldData[]{InputFieldData.LNAME});
-        personalAreaPage.clearFieldsData(new InputFieldData[]{InputFieldData.LNAMELATIN});
-        personalAreaPage.clearFieldsData(new InputFieldData[]{InputFieldData.BLOGNAME});
-        personalAreaPage.clearFieldsData(new InputFieldData[]{InputFieldData.DATEOFBRTH});
+        personalAreaPage.clearFieldsData(InputFieldData.FNAME, InputFieldData.FNAMELATIN, InputFieldData.LNAME,
+                InputFieldData.LNAMELATIN, InputFieldData.BLOGNAME, InputFieldData.DATEOFBRTH);
         personalAreaPage.clearFieldsCountryAndEnglish();
-        personalAreaPage.addDataFields(InputFieldData.FNAME, this.faker.name().firstName());
-        personalAreaPage.addDataFields(InputFieldData.FNAMELATIN, this.faker.name().lastName());
-        personalAreaPage.addDataFields(InputFieldData.LNAME, this.faker.name().firstName());
-        personalAreaPage.addDataFields(InputFieldData.LNAMELATIN, this.faker.name().name());
-        personalAreaPage.addDataFields(InputFieldData.BLOGNAME, this.faker.name().name());
-        personalAreaPage.addDataFields(InputFieldData.DATEOFBRTH, this.faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        personalAreaPage.addDataFields(faker.name().firstName(),InputFieldData.FNAME, InputFieldData.FNAMELATIN, InputFieldData.LNAME,
+                InputFieldData.LNAMELATIN, InputFieldData.BLOGNAME);
+        personalAreaPage.addDataFields(faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")), InputFieldData.DATEOFBRTH);
         ICityData[] cityData = RussiaCityData.values();
-        ICityData city = (ICityData)this.faker.options().nextElement(cityData);
+        ICityData city = faker.options().nextElement(cityData);
         personalAreaPage.addCountry(city);
         personalAreaPage.addCity(city);
         personalAreaPage.addEnglishlevel(EnglishLevelData.FIRSTLEVEL);
         personalAreaPage.addWillingToRelocate(true);
-        personalAreaPage.addWorkFormat(true, new WorkFormatData[]{WorkFormatData.REMOTELY});
-        personalAreaPage.addContactsOne(InputFieldData.SKYPE, this.faker.name().name(), 2);
-        personalAreaPage.addContactsOne(InputFieldData.HABR, this.faker.name().name(), 3);
+        personalAreaPage.addWorkFormat(true, WorkFormatData.REMOTELY);
+        personalAreaPage.addContactsOne(InputFieldData.SKYPE, faker.name().name(), 2);
+        personalAreaPage.addContactsOne(InputFieldData.HABR, faker.name().name(), 3);
         personalAreaPage.addGender(GenderData.MALE);
-        personalAreaPage.addDataFields(InputFieldData.COMPANY, this.faker.company().name());
-        personalAreaPage.addDataFields(InputFieldData.POSITION, this.faker.job().position());
+        personalAreaPage.addDataFields(faker.company().name(), InputFieldData.COMPANY);
+        personalAreaPage.addDataFields(faker.job().position(), InputFieldData.POSITION);
         personalAreaPage.clickSavePersonalArea();
         this.stopDriver();
         this.init();
@@ -102,12 +87,8 @@ public class PersonalAreaTest {
         authorizationPopup.enterLoginButton();
         header.checkLogoUser();
         header.clickPersonalArea();
-        personalAreaPage.checkPersonalArea(InputFieldData.FNAME);
-        personalAreaPage.checkPersonalArea(InputFieldData.FNAMELATIN);
-        personalAreaPage.checkPersonalArea(InputFieldData.LNAME);
-        personalAreaPage.checkPersonalArea(InputFieldData.LNAMELATIN);
-        personalAreaPage.checkPersonalArea(InputFieldData.BLOGNAME);
-        personalAreaPage.checkPersonalArea(InputFieldData.DATEOFBRTH);
+        personalAreaPage.checkPersonalArea(InputFieldData.FNAME, InputFieldData.FNAMELATIN, InputFieldData.LNAME,
+                InputFieldData.LNAMELATIN, InputFieldData.BLOGNAME, InputFieldData.DATEOFBRTH);
         personalAreaPage.chechPersonalAreaData();
     }
 }
